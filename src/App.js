@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { connect } from './redux/react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const addCountAction = {  
+    type: 'add'
 }
 
-export default App;
+const mapStateToProps = state => {  
+    return {      
+        count: state.count  
+    }
+}
+
+const mapDispatchToProps = dispatch => {  
+        
+    return {      
+        addCount: () => {          
+            dispatch(addCountAction)
+
+        }  
+    }
+}
+
+class App extends React.Component {
+    render() { 
+      // console.log(this.props)
+        return (      
+            <div className="App">        
+                { this.props.count }        
+                <button onClick={ () => this.props.addCount() }>增加</button>      
+            </div>    
+        );  
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
